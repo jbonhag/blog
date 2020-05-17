@@ -9,7 +9,11 @@ jobs:
   github-pages:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: helaili/jekyll-action@2.0.2
-        env:
-          JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
+      - name: Code Checkout
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6.x'
+      - name: Deploy Site
+        run: ./.ci/deploy.sh
