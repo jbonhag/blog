@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 # prepare environment
+# this is kinda weird, are you really supposed to check Gemfile.lock into
+# version controler?
+sed -e '1,/BUNDLED WITH/d' Gemfile.lock | read BUNDLER_VERSION
+gem install bundler:${BUNDLER_VERSION}
 bundle install || exit 1
 
 # rebuild the site
