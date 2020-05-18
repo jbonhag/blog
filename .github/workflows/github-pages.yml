@@ -16,4 +16,6 @@ jobs:
         with:
           ruby-version: '2.6.x'
       - name: Deploy Site
+        env:
+          DEPLOY_KEY: ${{ secrets.deploy_key }}
         run: ./.ci/deploy.sh

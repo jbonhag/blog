@@ -10,15 +10,21 @@ git config --global user.name runner
 # rebuild the site
 bundle exec jekyll build
 
+# set up deploy key
+echo $DEPLOY_KEY > deploy.key
+export GIT_SSH_COMMAND="ssh -i $PWD/deploy.key"
+
 # commit changes
-if [ -d /tmp/jbonhag.github.io ]; then
-  /bin/rm -fr /tmp/jbonhag.github.io
-fi
 git clone git@github.com:jbonhag/jbonhag.github.io /tmp/jbonhag.github.io
 rsync -azv --delete --exclude=.git ./_site/ /tmp/jbonhag.github.io
 pushd /tmp/jbonhag.github.io
 git add .
 git commit -m deploy
 git push -u origin master
+popd
+
+# cleanup
+/bin/rm -f deploy.key
+/bin/rm -fr /tmp/jbonhag.github.io
 
 # done!
