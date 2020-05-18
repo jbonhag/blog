@@ -12,6 +12,7 @@ bundle exec jekyll build
 
 # set up deploy key
 echo $DEPLOY_KEY > deploy.key
+chmod 0600 deploy.key
 export GIT_SSH_COMMAND="ssh -i $PWD/deploy.key"
 
 # commit changes
